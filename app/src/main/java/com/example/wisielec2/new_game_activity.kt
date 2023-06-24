@@ -3,6 +3,7 @@ package com.example.wisielec2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,7 +11,6 @@ import android.widget.TextView
 class new_game_activity : AppCompatActivity() {
     private val gameManager = GameManager()
     private lateinit var wordTextView: TextView
-    private lateinit var GuessedLetters: TextView
     private lateinit var imageView: ImageView
     private lateinit var gameLostTextView: TextView
     private lateinit var gameWonTextView: TextView
@@ -32,7 +32,7 @@ class new_game_activity : AppCompatActivity() {
     }
 
     private var errorCount = 0
-    private val maxErrors = 7
+    private val maxErrors = 8
 
     private fun checkLetter(letter: Char) {
         if (selectedWord.contains(letter, ignoreCase = true)) {
@@ -46,13 +46,17 @@ class new_game_activity : AppCompatActivity() {
             wordTextView.text = underscoreWord
         } else {
             errorCount++
+            val hangmanImageResource = resources.getIdentifier("hangman$errorCount", "drawable", "com.example.wisielec2")
+            imageView.setImageResource(hangmanImageResource)
             if (errorCount >= maxErrors) {
-                // Display "You lost" message
                 gameLostTextView.visibility = View.VISIBLE
+                wordTextView.visibility=View.INVISIBLE
+
+
             }
         }
 
-        // Update error count on the screen
+
         tries_counter.text = errorCount.toString()
     }
 
@@ -66,9 +70,8 @@ class new_game_activity : AppCompatActivity() {
         selectedWord = randomWordPicker()
         generateUnderscores(selectedWord)
         wordTextView.text = underscoreWord
-
         gameLostTextView = findViewById(R.id.LOST_SIGN)
-
+        imageView = findViewById(R.id.imageView)
 
         val letterA: Button = findViewById(R.id.button16)
         letterA.setOnClickListener {
