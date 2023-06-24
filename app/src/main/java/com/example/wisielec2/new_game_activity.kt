@@ -2,6 +2,7 @@ package com.example.wisielec2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -30,6 +31,9 @@ class new_game_activity : AppCompatActivity() {
         underscoreWord = sb.toString()
     }
 
+    private var errorCount = 0
+    private val maxErrors = 7
+
     private fun checkLetter(letter: Char) {
         if (selectedWord.contains(letter, ignoreCase = true)) {
             val sb = StringBuilder(underscoreWord)
@@ -40,7 +44,16 @@ class new_game_activity : AppCompatActivity() {
             }
             underscoreWord = sb.toString()
             wordTextView.text = underscoreWord
+        } else {
+            errorCount++
+            if (errorCount >= maxErrors) {
+                // Display "You lost" message
+                gameLostTextView.visibility = View.VISIBLE
+            }
         }
+
+        // Update error count on the screen
+        tries_counter.text = errorCount.toString()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +61,14 @@ class new_game_activity : AppCompatActivity() {
         setContentView(R.layout.activity_new_game)
 
         wordTextView = findViewById(R.id.wordTextView)
+        tries_counter = findViewById(R.id.tries_counter) // Initialize tries_counter here
 
         selectedWord = randomWordPicker()
         generateUnderscores(selectedWord)
         wordTextView.text = underscoreWord
+
+        gameLostTextView = findViewById(R.id.LOST_SIGN)
+
 
         val letterA: Button = findViewById(R.id.button16)
         letterA.setOnClickListener {
