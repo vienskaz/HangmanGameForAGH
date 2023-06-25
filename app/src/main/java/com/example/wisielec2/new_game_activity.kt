@@ -17,7 +17,6 @@ class new_game_activity : AppCompatActivity() {
     private lateinit var underscoreWord: String
     private lateinit var selectedWord: String
     private lateinit var tries_counter: TextView
-    private var tries = 0
     private var correctletterCount = 0
 
     private fun randomWordPicker(): String {
