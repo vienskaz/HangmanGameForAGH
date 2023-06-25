@@ -35,7 +35,7 @@ class new_game_activity : AppCompatActivity() {
 
 
     private var errorCount = 0
-    private val maxErrors = 8
+    private val maxErrors = 9
 
     private fun checkLetter(letter: Char) {
         if (!::selectedWord.isInitialized) return
